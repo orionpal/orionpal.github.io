@@ -1,13 +1,29 @@
+:root {
+    --primary: ;
+    --secondary1: ;
+    --secondary2: ;
+    --accent1: ;
+    --accent2: ;
+
+    --baby-blue: #e7f2f8;
+    --aquamarine: #74bdcb;
+    --accent: #ffa384;
+    --freesia: #efe7bc;
+}
+
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
     margin: 0;
     padding: 0;
+    background-color: var(--baby-blue);
+    color: var(--aquamarine)
 }
 
 header {
-    background-color: #f4f4f4;
+    background-color: var(--baby-blue);
     padding: 1rem;
+    color: var(--aquamarine)
 }
 
 h1 {
@@ -15,19 +31,19 @@ h1 {
 }
 
 nav {
-    background-color: #333;
+    background-color: var(--freesia);
     display: flex;
     justify-content: space-around;
     padding: 1rem;
 }
 
 nav a {
-    color: white;
+    color: var(--accent);
     text-decoration: none;
 }
 
 nav a:hover {
-    color: #f4f4f4;
+    color: var(--accent);
 }
 
 main {
@@ -39,8 +55,8 @@ section {
 }
 
 footer {
-    background-color: #333;
-    color: white;
+    background-color: var(--freesia);
+    color: var(--accent);
     padding: 1rem;
     text-align: center;
 }
