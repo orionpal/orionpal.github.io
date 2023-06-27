@@ -3,32 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orion's Website</title>
+    <title>Orionpal</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <style>
+        body {
+            background-color: rgb(17,27,27);
+            color: white;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        .node {
+            fill: white;
+            cursor: move;
+        }
+
+        .label {
+            fill: white;
+            font-size: 12px;
+            text-anchor: middle;
+        }
+
+        .link {
+            stroke: white;
+            stroke-width: 2px;
+        }
+    </style>
+</head>
 <body>
-    <header>
-        <h1>Welcome to Orion's Website</h1>
-    </header>
-    <nav>
-        <a href="#home">Home</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-    </nav>
-    <main>
-        <section id="home">
-            <h2>Home</h2>
-            <p>This is the home section of my website.</p>
-        </section>
-        <section id="about">
-            <h2>About</h2>
-            <p>This is the about section of my website.</p>
-        </section>
-        <section id="contact">
-            <h2>Contact</h2>
-            <p>This is the contact section of my website.</p>
-        </section>
-    </main>
+    <script>
+       var svg = d3.select("body")
+            .append("svg")
+            .attr("width", window.innerWidth)
+            .attr("height", window.innerHeight);
+
+        var data = [
+            {name: "Node 1", x: 100, y: 100},
+            {name: "Node 2", x: 200, y: 200},
+            {name: "Node 3", x: 300, y: 300},
+            {name: "Node 4", x: 400, y: 400},
+            {name: "Node 5", x: 500, y: 500}
+        ];
+
+        // Create links (lines) between nodes
+        var links = svg.selectAll("line")
+            .data(d3.pairs(data))
+            .enter()
+            .append("line")
+            .attr("class", "link")
+            .attr("x1", function(d) { return d[0].x; })
+            .attr("y1", function(d) { return d[0].y; })
+            .attr("x2", function(d) { return d[1].x; })
+            .attr("y2", function(d) { return d[1].y; })
+            .style("stroke", "white");
+
+        // Create nodes (circles)
+        var nodes = svg.selectAll("circle")
+            .data(data)
+            .enter()
+            .append("circle")
+            .attr("class", "node")
+            .attr("r", 20)
+            .attr("cx", function(d) { return d.x; })
+            .attr("cy", function(d) { return d.y; });
+            // .each(sway);
+
+        // Create labels (text)
+        var labels = svg.selectAll("text")
+            .data(data)
+            .enter()
+            .append("text")
+            .attr("class", "label")
+            .attr("x", function(d) { return d.x; })
+            .attr("y", function(d) { return d.y - 25; })
+            .text(function(d) { return d.name; });
+
+        function sway() {
+            // 'this' refers to the DOM element being processed.
+            var node = d3.select(this);
+            var d = node.datum();
+
+            var newX = d.x + Math.random() * 10 - 5;
+            var newY = d.y + Math.random() * 10 - 5;
+
+            var xInterpolate = d3.interpolate(d.x, newX);
+            var yInterpolate = d3.interpolate(d.y, newY);
+            var xInterpolateReturn = d3.interpolate(newX, d.x);
+            var yInterpolateReturn = d3.interpolate(newY, d.y);
+
+            // First sway to new position
+            node.transition()
+                .ease(d3.easeQuadInOut)
+                .duration(2000)
+                .attrTween("cx", function() { return xInterpolate; })
+                .attrTween("cy", function() { return yInterpolate; })
+                .transition() // Add another transition to move the nodes back.
+                .ease(d3.easeQuadInOut)
+                .duration(2000)
+                .attrTween("cx", function() { return xInterpolateReturn; })
+                .attrTween("cy", function() { return yInterpolateReturn; })
+                .on("end", sway);
+
+            d3.selectAll(".link")
+                .filter(function(linkData) { return linkData.source === d || linkData.target === d; })
+                .transition()
+                .ease(d3.easeQuadInOut)
+                .duration(2000)
+                .attrTween("x1", function(linkData) { return linkData.source === d ? xInterpolate : d3.interpolate(linkData.source.x, linkData.source.x); })
+                .attrTween("y1", function(linkData) { return linkData.source === d ? yInterpolate : d3.interpolate(linkData.source.y, linkData.source.y); })
+                .attrTween("x2", function(linkData) { return linkData.target === d ? xInterpolate : d3.interpolate(linkData.target.x, linkData.target.x); })
+                .attrTween("y2", function(linkData) { return linkData.target === d ? yInterpolate : d3.interpolate(linkData.target.y, linkData.target.y); })
+                .transition()
+                .ease(d3.easeQuadInOut)
+                .duration(2000)
+                .attrTween("x1", function(linkData) { return linkData.source === d ? xInterpolateReturn : d3.interpolate(linkData.source.x, linkData.source.x); })
+                .attrTween("y1", function(linkData) { return linkData.source === d ? yInterpolateReturn : d3.interpolate(linkData.source.y, linkData.source.y); })
+                .attrTween("x2", function(linkData) { return linkData.target === d ? xInterpolateReturn : d3.interpolate(linkData.target.x, linkData.target.x); })
+                .attrTween("y2", function(linkData) { return linkData.target === d ? yInterpolateReturn : d3.interpolate(linkData.target.y, linkData.target.y); });
+
+            d3.selectAll(".label")
+                .filter(function(labelData) { return labelData === d; })
+                .transition()
+                .ease(d3.easeQuadInOut)
+                .duration(2000)
+                .attrTween("x", function() { return xInterpolate; })
+                .attrTween("y", function() { return function(t) { return yInterpolate(t) - 25; }; })
+                .transition()
+                .ease(d3.easeQuadInOut)
+                .duration(2000)
+                .attrTween("x", function() { return xInterpolateReturn; })
+                .attrTween("y", function() { return function(t) { return yInterpolateReturn(t) - 25; }; })
+        }
+
+nodes.each(sway);
+
+
+
+
+    </script>
     <footer>
         <p>&copy; 2023 Orionpal. All rights reserved.</p>
     </footer>

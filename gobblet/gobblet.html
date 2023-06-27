@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Gobblet</title>
+    <style>
+        .board {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 5px;
+            width: 420px;
+        }
+        .tile {
+            width: 100px;
+            height: 100px;
+            border: 1px solid black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .tile img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+        .tile:hover {
+            background-color: #ddd; /* Change this to the color you want when hovering */
+        }
+        .tile:active {
+            transform: scale(0.95); /* This makes the button look like it's being pushed down */
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a href="gobblet.html">Play Gobblet!</a>
+    </nav>
+    <main>
+    <div class="board">
+        <button class="tile"><img src="path_to_your_image" alt="Tile 1"></button>
+        <button class="tile"><img src="path_to_your_image" alt="Tile 2"></button>
+        <button class="tile"><img src="path_to_your_image" alt="Tile 3"></button>
+        <button class="tile"><img src="path_to_your_image" alt="Tile 4"></button>
+        <button class="tile"><img src="path_to_your_image" alt="Tile 5"></button>
+        <button class="tile"><img src="path_to_your_image" alt="Tile 6"></button>
+        <button class="tile"><img src="path_to_your_image" alt="Tile 7"></button>
+        <button class="tile"><img src="path_to_your_image" alt="Tile 8"></button>
+        <button class="tile"><img src="path_to_your_image" alt="Tile 9"></button>
+        <button class="tile"><img src="path_to_your_image" alt="Tile 10"></button>
+        <button class="tile"><img src="path_to_your_image" alt="Tile 11"></button>
+        <button class="tile"><img src="path_to_your_image" alt="Tile 12"></button>
+        <button class="tile"><img src="path_to_your_image" alt="Tile 13"></button>
+        <button class="tile"><img src="path_to_your_image" alt="Tile 14"></button>
+        <button class="tile"><img src="path_to_your_image" alt="Tile 15"></button>
+        <button class="tile"><img src="path_to_your_image" alt="Tile 16"></button>
+    </div>
+    <script>
+        // Get a reference to all the buttons
+        var tiles = document.querySelectorAll('.tile');
+
+        // Define the event handler function
+        function handleTileClick(event) {
+            console.log('A tile was clicked!');
+        }
+
+        // Loop over the buttons and add the event listener to each one
+        for (var i = 0; i < tiles.length; i++) {
+            tiles[i].addEventListener('click', handleTileClick);
+        }
+    </script>
+</main>
+</body>
+</html>
