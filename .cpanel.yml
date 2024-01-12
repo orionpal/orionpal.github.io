@@ -3,5 +3,5 @@ deployment:
       tasks:
         - export DEPLOYPATH=/home/oriorrzc/public_html
         - echo "Starting deployment" >> deployment.log
-        - /bin/cp -R * $DEPLOYPATH
+        - /bin/cp -R /public * $DEPLOYPATH
         - echo "Deployment completed" >> deployment.log
