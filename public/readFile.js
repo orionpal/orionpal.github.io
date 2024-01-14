@@ -34,10 +34,14 @@ console.log("hey the script is working")
             wordCountResults.innerHTML = '';
 
             const sortedWords = Object.entries(wordCounts).sort((a, b) => b[1] - a[1]);
-
+            var counter = 0
             sortedWords.forEach(([word, count]) => {
+                counter += 1;
                 const p = document.createElement('p');
                 p.textContent = `${word}: ${count}`;
                 wordCountResults.appendChild(p);
+                if (counter == 40) {
+                    return
+                }
             });
         }
