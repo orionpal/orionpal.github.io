@@ -37,13 +37,16 @@ console.log("hey the script is working")
             var counter = 0
             sortedWords.forEach(([word, count]) => {
                 counter += 1;
-                if (counter == 40) {
+                if (counter > 40) {
                     console.log("hey why not return")
                     return
                 }
-                console.log(counter)
-                const p = document.createElement('p');
-                p.textContent = `${word}: ${count}`;
-                wordCountResults.appendChild(p);
+                else {
+                    console.log(counter)
+                    const p = document.createElement('p');
+                    p.textContent = `${word}: ${count}`;
+                    wordCountResults.appendChild(p);
+                }
+                
             });
         }
