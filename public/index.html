@@ -3,46 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delpinkie</title>
-    <style>
-        /* Add your CSS styles here */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            text-align: center;
-        }
-    </style>
+    <title>Orion</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h1>Ludmilla's Reader</h1>
-    </header>
+    <canvas id="c"></canvas>
 
-    <nav>
-        <!-- Navigation links or buttons can go here -->
-    </nav>
+    
+    <div class="copyright">
+        &copy; 2024 Orion Palaquibay. All rights reserved.
+    </div>
 
-    <main>
-        <!-- Main game area -->
-        <div id="game-container">
-            <div>
-                <p>
-                    Give me a book to read!! 
-                    <input type="file" id="fileInput">
-                    <div id="wordcountresults"></div>
-                </p>
-            </div>
-            <!-- Game content will be added here -->
-        </div>
-    </main>
-
-    <footer>
-        <p>&copy; 2024 Orion Palaquibay. All rights reserved.</p>
-    </footer>
-
-    <script src="readFile.js"></script>
+    <script type="module" src="homepage.js"></script>
     <script>
         // JavaScript for game logic will go here
     </script>

@@ -1,3 +1,7 @@
+
+
+// This is legacy code, used for delfina's bookclub presentation
+
 console.log("hey the script is working")
         document.getElementById('fileInput').onchange = function() {
             var file = this.files[0];
