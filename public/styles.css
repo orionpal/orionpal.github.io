@@ -1,4 +1,10 @@
-/* Add your CSS styles here */
+/* no scroll pls*/
+html,
+body {
+    overflow: hidden;
+    height: 100%;
+}
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;

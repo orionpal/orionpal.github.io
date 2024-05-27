@@ -1,6 +1,9 @@
 # orionpal.github.io
 Website for Orion P
 
+# testing/development
+To test changes, switch to the public directory and run npx vite dev
+
 # deployment
 This is currently being deployed to orionpal.com
 

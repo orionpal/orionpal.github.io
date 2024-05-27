@@ -1,70 +1,142 @@
 import * as THREE from 'three';
+import { makeGround } from './base/ground.js'
+import { createRenderer, createCamera, createScene } from './base/scene.js'
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
+// -------------------------- Basic setup --------------------------
+const canvas = document.querySelector('#c');
+const renderer = createRenderer(canvas)
+const camera = createCamera()
+const scene = createScene()
+const groundWidth = 100;
+const groundLength = 200;
+const ground = makeGround(scene, groundWidth, groundLength);
+// Light to highlight character
+const lightDirectional = new THREE.DirectionalLight(0xffffff, 1)
+scene.add(lightDirectional)
 
-function makeGround(scene) {
-    const planeGeo = new THREE.PlaneGeometry(10, 10);
-    const planeMat = new THREE.MeshPhongMaterial({
-      side: THREE.DoubleSide,
+window.addEventListener( "resize", (event) => {
+    camera.aspect = window.innerWidth/window.innerHeight;
+    camera.updateProjectionMatrix( );
+    renderer.setSize( window.innerWidth, window.innerHeight );
+});
+
+// -------------------------- Character object --------------------------
+// Just loading in our character guys and their animations
+const loader = new GLTFLoader();
+let character, mixer, idleAction, walkAction, activeAction;
+loader.load('/entities/ani-human.glb', function (gltf) {
+    character = gltf.scene;
+    character.scale.set(1, 1, 1);
+    character.position.set(0, 5, 0);
+    scene.add(character);
+
+    mixer = new THREE.AnimationMixer(character);
+    gltf.animations.forEach((clip) => {
+        console.log('Animation name:', clip.name);
     });
-    const mesh = new THREE.Mesh(planeGeo, planeMat);
-    mesh.rotation.x = Math.PI * -.5;
-    scene.add(mesh);
-}
 
-function main() {
-    // How we access the HTML
-    const canvas = document.querySelector('#c');
 
-    // Renderer that does legwork
-    const renderer = new THREE.WebGLRenderer({antialias: true, canvas});
-    renderer.setSize(window.innerWidth, window.innerHeight)
+    idleAction = mixer.clipAction(gltf.animations.find(clip => clip.name === 'Human Armature|Idle'));
+    walkAction = mixer.clipAction(gltf.animations.find(clip => clip.name === 'Human Armature|Run'));
 
-    // Camera that uses the renderer on a scene
-    const fov = 90;     // field of view?
-    const aspect = 2;   // the canvas default, x-dim / y-dim
-    const near = 0.1;   // Not sure what this does
-    const far = 100;      // Not sure what this does
-    const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-    camera.position.set(0, 10, 20);
-    
-    // Scene that has the objects we want to look at
-    const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x7fe4ff);
+    idleAction.play();
+    activeAction = idleAction;
+});
 
-    const color = 0xFFFFFF;
-    const intensity = 1;
-    const light = new THREE.AmbientLight(color, intensity);
-    scene.add(light);
 
-    //makeGround(scene);
-    // Make a lil boxxy box
-    const boxWidth = 10;
-    const boxHeight = 10;
-    const boxDepth = 10;
-    const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
+// -------------------------- Controls --------------------------
 
-    const material = new THREE.MeshPhongMaterial({color: 0x44aa88});
+// capture key events
+var keyHash = {};
 
-    // Mesh is represented by:
-    // 1. Geometry, boundaries of a shape
-    // 2. Material, the texture and colors of the shape
-    // 3. Position, where the shape exists in the world
-    const cube = new THREE.Mesh(geometry, material);
-    scene.add(cube);
-
-    // Function to call for animation
-    function render(time) {
-        time *= 0.001;  // convert time to seconds
-    
-        cube.rotation.x = time;
-        cube.rotation.y = time;
-    
-        renderer.render(scene, camera);
-    
-        requestAnimationFrame(render);
+window.addEventListener('keydown', (event) => {
+        keyHash[event.key] = true
+        if (walkAction && activeAction !== walkAction) {
+            activeAction.stop();
+            walkAction.reset().play();
+            activeAction = walkAction;
+        }
     }
+);
+window.addEventListener('keyup', (event) => {
+        keyHash[event.key] = false
+        if (!keyHash['ArrowUp'] && !keyHash['ArrowDown'] && !keyHash['ArrowLeft'] && !keyHash['ArrowRight']) {
+            if (idleAction && activeAction !== idleAction) {
+                activeAction.stop();
+                idleAction.reset().play();
+                activeAction = idleAction;
+            }
+        }
+    }
+);
+
+const clock = new THREE.Clock();
+// Character movement speed
+const speed = 0.3;
+// Gravity and velocity
+const gravity = -0.01;
+let velocityY = 0;
+
+function render() {
+    const delta = clock.getDelta();
+    if (mixer) mixer.update(delta);
+
+    if (character) {
+        velocityY += gravity;
+        character.position.y += velocityY;
+        let moving = false;
+        let direction = new THREE.Vector3();
+
+        if (keyHash['ArrowUp']) {
+            character.position.z -= speed;
+            direction.z = -1;
+            moving = true;
+        }
+        if (keyHash['ArrowDown']) {
+            character.position.z += speed;
+            direction.z = 1
+            moving = true;
+        }
+        if (keyHash['ArrowLeft']) {
+            character.position.x -= speed;
+            direction.x = -1
+            moving = true;
+        } 
+        if (keyHash['ArrowRight']) {
+            character.position.x += speed;
+            direction.x = 1
+            moving = true;
+        }
+
+        // Don't fall off ground
+        if (character.position.x < -groundWidth/4) {
+            character.position.x = -groundWidth/4;
+        }
+        if (character.position.x > groundWidth/4) {
+            character.position.x = groundWidth/4
+        }
+        if (character.position.z < -groundLength/6) {
+            character.position.z = -groundLength/6
+        }
+        if (character.position.z > groundLength / 14) {
+            character.position.z = groundLength / 14
+        }
+
+        const groundLevel = 5;
+        if (character.position.y < groundLevel) {
+            character.position.y = groundLevel;
+            velocityY = 0;
+        }
+        if (moving) {
+            direction.normalize();
+            const angle = Math.atan2(direction.x, direction.z);
+            character.rotation.y = angle;
+        }
+    }
+
+    renderer.render(scene, camera);
     requestAnimationFrame(render);
 }
 
-
-main();
+requestAnimationFrame(render);
