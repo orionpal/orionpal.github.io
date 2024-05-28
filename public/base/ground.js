@@ -25,3 +25,26 @@ export function changeGroundColor(ground){
     ground.material.color.set(color_choices[2]);
     colorIndex = (colorIndex + 1) % color_choices.length;
 }
+
+export function addGrass(scene, width, length) {
+    const grassBladeGeometry = new THREE.ConeGeometry(0.3, .3, 2);
+
+    const grassBladeMaterial = new THREE.MeshLambertMaterial({
+        color: 0x00ff00
+    });
+
+    const grassCount = 10000;
+    for (let i = 0; i < grassCount; i++) {
+        const grassBlade = new THREE.Mesh(grassBladeGeometry, grassBladeMaterial);
+
+        grassBlade.position.x = Math.random() * width - width / 2;
+        grassBlade.position.z = Math.random() * length - length / 3;
+        grassBlade.position.y = 0.5;
+
+        grassBlade.rotation.y = Math.random() * Math.PI;
+
+        // Set render order
+        grassBlade.renderOrder = 1;
+        scene.add(grassBlade);
+    }
+}

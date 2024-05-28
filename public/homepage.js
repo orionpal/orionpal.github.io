@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { makeGround } from './base/ground.js'
+import { makeGround, addGrass } from './base/ground.js'
 import { createRenderer, createCamera, createScene } from './base/scene.js'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
@@ -8,9 +8,10 @@ const canvas = document.querySelector('#c');
 const renderer = createRenderer(canvas)
 const camera = createCamera()
 const scene = createScene()
-const groundWidth = 100;
+const groundWidth = window.innerWidth/8;
 const groundLength = 200;
 const ground = makeGround(scene, groundWidth, groundLength);
+addGrass(scene, groundWidth, groundLength); // Add grass to the ground
 // Light to highlight character
 const lightDirectional = new THREE.DirectionalLight(0xffffff, 1)
 scene.add(lightDirectional)
@@ -109,12 +110,12 @@ function render() {
             moving = true;
         }
 
-        // Don't fall off ground
-        if (character.position.x < -groundWidth/4) {
-            character.position.x = -groundWidth/4;
+        // stay in bounds
+        if (character.position.x < -groundWidth/8) {
+            character.position.x = -groundWidth/8;
         }
-        if (character.position.x > groundWidth/4) {
-            character.position.x = groundWidth/4
+        if (character.position.x > groundWidth/8) {
+            character.position.x = groundWidth/8
         }
         if (character.position.z < -groundLength/6) {
             character.position.z = -groundLength/6
@@ -134,6 +135,13 @@ function render() {
             character.rotation.y = angle;
         }
     }
+
+    // Manually sort objects by depth
+    scene.children.sort((a, b) => {
+        const aDistance = camera.position.distanceTo(a.position);
+        const bDistance = camera.position.distanceTo(b.position);
+        return bDistance - aDistance;
+    });
 
     renderer.render(scene, camera);
     requestAnimationFrame(render);
