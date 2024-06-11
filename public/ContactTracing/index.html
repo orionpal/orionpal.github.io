@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graph Editor</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Graph Editor</h1>
+    <button onclick="createNewGraph()">Create New Graph</button>
+    <button onclick="uploadGraph()">Upload Custom Graph</button>
+    <input type="file" id="fileInput" style="display:none" onchange="handleFileUpload(event)">
+    <button onclick="saveGraph()">Save Graph</button>
+    <div id="graph">
+        <div id="searchContainer">
+            <input type="text" id="searchInput" placeholder="Search nodes...">
+        </div>
+        <div id="controls">
+            <button id="addNodeButton">Add Node</button>
+        </div>
+        <div id="contextMenu" class="context-menu">
+            <button id="editNode">Edit</button>
+            <button id="deleteNode">Delete</button>
+            <button id="addEdge">Add Edge</button>
+            <button id="removeEdge">Remove Edge</button>
+            <button id="closeMenu">Nevermind Bro</button>
+        </div>
+        <div id="promptDialog" class="prompt-dialog">
+            <p id="promptText"></p>
+            <input type="text" id="promptInput">
+            <p id="errorText" class="error-text"></p>
+            <button id="submitPrompt">Submit</button>
+            <button id="cancelPrompt">Cancel</button>
+        </div>
+        <svg width="800" height="600"></svg>
+        <script src="https://d3js.org/d3.v6.min.js"></script>
+    </div>
+    
+    <script src="graph.js"></script>
+</body>
+</html>

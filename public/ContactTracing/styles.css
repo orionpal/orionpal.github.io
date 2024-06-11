@@ -1,0 +1,93 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+#searchContainer {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    width: auto;
+}
+
+#controls {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    width: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#addNodeButton {
+    margin-right: 10px;
+}
+
+input {
+    margin-bottom: 10px;
+}
+
+line {
+    stroke: #999;
+    stroke-opacity: 0.6;
+}
+
+circle {
+    stroke: #fff;
+    stroke-width: 1.5px;
+    cursor: pointer;
+}
+
+circle.highlight {
+    stroke: orange;
+    stroke-width: 3px;
+}
+
+text {
+    font-size: 12px;
+    pointer-events: none;
+}
+
+.context-menu {
+    display: none;
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+    z-index: 10;
+}
+
+.context-menu button {
+    display: block;
+    width: 100%;
+    padding: 5px;
+    border: none;
+    background: none;
+    text-align: left;
+}
+
+.context-menu button:hover {
+    background-color: #f0f0f0;
+}
+
+.prompt-dialog {
+    display: none;
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+    z-index: 20;
+}
+
+.prompt-dialog input {
+    width: 100px;
+}
+
+.error-text {
+    color: red;
+    display: none;
+}
