@@ -1,0 +1,23 @@
+/* no scroll pls*/
+html,
+body {
+    overflow: hidden;
+    height: 100%;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    text-align: center;
+}
+
+div.copyright{
+    display:block;
+    position:absolute;
+    bottom:0;
+    right:0;
+    width:100%;
+    opacity: 0.7;
+}

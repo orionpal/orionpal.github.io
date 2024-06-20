@@ -1,23 +1,176 @@
-/* no scroll pls*/
-html,
+/* styles.css */
+/* ------------ BASE ------------*/
 body {
-    overflow: hidden;
-    height: 100%;
-}
-
-body {
-    font-family: Arial, sans-serif;
+    /* RGB palette */
+    /* color: #ed7575;
+    color: #bff280;
+    color: #7fe4ff; 
+    color: #1d1d1d;
+    */
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
-    text-align: center;
+    width: 100%;
+    height: 100%;
+    color: #ffffff;
+    background-color: #0d0d0d;
+    overflow: hidden;
+    perspective: 1000px;
+    font-family: Palatino linotype;
+}
+.background-grid {
+    will-change: transform;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 50%;
+    height: 200%;
+    transform: translate(-50%, -50%) rotateX(85deg) translateY(50%);
+    background:
+    repeating-linear-gradient(#1d1d1d,
+            #1d1d1d 1px,
+            transparent 1px,
+            transparent 20px),
+        repeating-linear-gradient(90deg,
+            #1d1d1d,
+            #1d1d1d 1px,
+            transparent 1px,
+            transparent 20px);
+    background-size: 20px 20px;
+    animation: moveGrid 1.5s linear infinite;
+    z-index: 0;
+
+    box-shadow: inset 0 0 1620px #0d0d0d, inset 0 0 1580px #0d0d0d, inset 0 0 1540px #0d0d0d; /* vignette */
 }
 
-div.copyright{
-    display:block;
-    position:absolute;
-    bottom:0;
-    right:0;
-    width:100%;
-    opacity: 0.7;
+@keyframes moveGrid {
+    from {
+        transform: translate(-50%, -50%) rotateX(85deg) translateY(650px);
+    }
+
+    to {
+        transform: translate(-50%, -50%) rotateX(85deg) translateY(670px);
+    }
+}
+.content {
+    position: relative;
+    display: grid;
+    max-width: 800px;
+    margin: 4% auto;
+    padding: 2px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    backdrop-filter: blur(10px);
+    z-index: 1;
+
+    
+}
+
+.box {
+    background: #0d0d0d;
+    /* Same color as the background */
+    padding: 10px;
+    margin: 1px;
+    /* Grey color for the border */
+    box-sizing: border-box;
+    /* Include padding and border in the element's total width and height */
+    text-align: center;
+    
+    /* Grey color for the text */
+}
+.box-title {
+    font-size: 1.5em;
+}
+
+.box.vcenter {
+    align-content: center;
+}
+
+.underline-bar1 {
+    height: 4px;
+    margin: 2px;
+    background: linear-gradient(to right, rgb(255, 0, 0), rgb(0, 255, 0), rgb(0, 0, 255));
+    /* background: linear-gradient(to right, rgb(255, 127, 127), rgb(127, 255, 127), rgb(127, 228, 255)); */
+}
+.underline-bar2 {
+    height: 4px;
+    margin: 2px;
+    /* background: linear-gradient(to right, rgb(255, 0, 0), rgb(0, 255, 0), rgb(0, 0, 255)); */
+    background: linear-gradient(to right, rgb(255, 63, 127), rgb(127, 255, 63), rgb(63, 127, 255));
+}
+
+#toggle-button {
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 16px;
+    /* Adjust the font size as needed */
+    cursor: pointer;
+    padding: 4px;
+    margin: 2px;
+    font-family: inherit;
+    /* Use the same font as the rest of your site */
+    outline: none;
+    /* Remove outline on focus */
+}
+
+#toggle-button:hover {
+    text-decoration: underline;
+    
+    /* Optional: add underline on hover for better visibility */
+}
+
+/* ---------- INDIVIDUAL BOXES ------------ */
+
+.links {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+.links li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    /* Adjust spacing between links */
+}
+.links img {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    /* Adjust spacing between icon and text */
+}
+.links a {
+    text-decoration: none;
+    color: #999;
+    transition: color 0.2s ease;
+    /* Adjust color as needed */
+    font-size: 16px;
+    /* Adjust font size as needed */
+}
+.links a:visited {
+    color: #999;
+}
+.links a:hover {
+    color: white;
+    /* Optional: add underline on hover for better visibility */
+}
+.pages li{
+    margin-bottom: 4px;
+}
+.pages {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* Two equal columns */
+    gap: 10px;
+    /* Adjust the gap between columns as needed */
+    list-style-type: none;
+}
+.banner {
+    padding: 20px;
+    height: 5%;
+}
+.contact-links {
+    text-align: left;
+}
+.website-links {
+    text-align: left;
 }
