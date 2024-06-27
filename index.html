@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orion Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-grid"></div>
+    <button id="toggle-button">Toggle Animation</button>
+    <script>
+        document.getElementById('toggle-button').addEventListener('click', function () {
+            const element = document.querySelector('.background-grid');
+            const currentState = getComputedStyle(element).animationPlayState;
+            element.style.animationPlayState = currentState === 'paused' ? 'running' : 'paused';
+        });
+    </script>
+    
+    <div class="content">
+        <div class="box vcenter welcome-banner" style="grid-column: 1 / 2;">
+            <h1>Orion Palaquibay</h1>
+            <div class="underline-bar1"></div>
+        </div>
+        <div class="box vcenter contact-links" style="grid-column: 2 / 3;">
+            <ul class="links">
+                <li>
+                    <img src="public/icons/In-White-48.png" alt="LinkedIn Icon">
+                    <a href="https://www.linkedin.com/in/orion-palaquibay-834110175/" target="_blank">LinkedIn</a>
+                </li>
+                <li>
+                    <img src="public/icons/github-mark-white.png" alt="GitHub Icon">
+                    <a href="https://github.com/orionpal" target="_blank">GitHub</a>
+                </li>
+                <li>
+                    <img src="public/icons/icons8-email-50.png" alt="Email Icon">
+                    <a href="mailto:orionpal@buffalo.edu">Email</a>
+                </li>
+            </ul>
+        </div>
+        <div class="box vcenter website-links" style="grid-column: 3 / 5;">
+            <div class="box-title" style="color: rgb(0,255,255)">Pages</div>
+            <ul class="links pages">
+                <li>
+                    <a>Homepage</a>
+                </li>
+                <li>
+                    <a>Mini-Projects</a>
+                </li>
+                <li>
+                    <a>homepage</a>
+                </li>
+                <li>
+                    <a>homepage</a>
+                </li>
+            </ul>
+        </div>
+        <div class="box banner" style="grid-column: 1 / 5;"></div>
+        <div class="box summary" style="grid-column: 1 / 2;">
+            <div class="box-title" style="color: rgb(0,255,0);">About</div>
+            <div style="margin: 10px;">
+                <span style="color: rgb(0,255,255)">Past</span>: <span style="color: #999">I was a Fullstack Developer for about 3 years but quit to shift career paths</span>
+            </div>
+            <div style="margin: 20px;">
+                <span style="color: rgb(255,255,0)">Present</span>: Currently pursuing my Master's in Computer Science and looking for backend or research work
+            </div>
+            <div style="margin: 20px;">
+                <span style="color: rgb(255,0,0)">Future</span>: <span style="color: #999">My hope is to contribute to the body of work surrounding artificial consciousness</span>
+            </div>
+            
+        </div>
+        
+        <div class="box about" style="grid-column: 2 / 5;">
+            <div class="box-title" style="color: rgb(255,255,0)">
+                Most Recent Project:
+            </div>
+            <div>
+                This actually won't load on github.io sites, but you can see it at <href>orionpal.com</href> (if the site's not under maintenence)
+            </div>
+        </div>
+        <!-- <div class="box" style="grid-column: 4/5;"></div> -->
+        <div class="box banner" style="grid-column: 1/ 5;">
+            
+        </div>
+        
+    </div>
+</body>
+
+</html>
