@@ -174,3 +174,25 @@ body {
 .website-links {
     text-align: left;
 }
+
+.about a {
+    text-decoration: none;
+    color: #999;
+    transition: color 0.2s ease;
+    /* Adjust color as needed */
+    font-size: 16px;
+    /* Adjust font size as needed */
+}
+
+.about a:visited {
+    color: #999;
+}
+
+.about a:hover {
+    color: white;
+    /* Optional: add underline on hover for better visibility */
+}
+
+#mygame-iframe {
+    align-content: center;
+}
