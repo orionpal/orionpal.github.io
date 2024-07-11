@@ -79,10 +79,17 @@
 
         <div class="box about" style="grid-column: 2 / 5;">
             <div class="box-title" style="color: rgb(255,255,0)">
-                Most Recent Project:
+                Bevy Boids:
             </div>
             <div>
-                <a href="/boids.html" style="color: rgb(255,255,0)">Bevy Boids</a> uses the rust programming language, bevy game engine, boid equations, and web assembly to show a very simplified version of a flocking simulation in 3 dimensions.
+                <a href="/boids.html" style="color: rgb(255,255,0)">Bevy Boids</a> uses the <a
+                    href="https://www.rust-lang.org/">rust</a> programming language, <a href="https://bevyengine.org/">bevy</a> game
+                engine, <a href="https://en.wikipedia.org/wiki/Boids">boid</a> equations, and web assembly to show a very simplified
+                version of a flocking simulation in 3 dimensions. Here is a minified version that has been compiled into web assembly:
+                <br>
+                <iframe id="mygame-iframe" src="BevyBoid/out/index.html" width="200" height="200"></iframe>
+                <br>
+                Unfortunately, the web limits the latency as well as the amount of possible simulated boids. Most simulations take place in 2 Dimensions, partly because it is computationally less intensive and also the visuals are much easier to see. An issue with this version, as you may have noticed, is that sometimes the lighting isn't quite right or that sometimes boids overlap.
             </div>
         </div>
         <!-- <div class="box" style="grid-column: 4/5;"></div> -->
